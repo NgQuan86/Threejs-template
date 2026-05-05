@@ -1,4 +1,6 @@
 import restart from 'vite-plugin-restart'
+import checker from 'vite-plugin-checker'
+import tsconfigPaths from 'vite-tsconfig-paths'
 import { resolve } from 'path'
 
 export default {
@@ -39,6 +41,8 @@ export default {
     assetsInclude: ['**/*.glsl', '**/*.vert', '**/*.frag'],
 
     plugins: [
-        restart({ restart: ['../static/**'] })  // Restart server on static file change
+        restart({ restart: ['../static/**'] }),
+        tsconfigPaths(),
+        checker({ typescript: true, eslint: { useFlatConfig: true, lintCommand: 'eslint ./src' } }),
     ],
 }

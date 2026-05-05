@@ -53,7 +53,7 @@
       "prettier --write"
     ],
     "src/**/*.ts": [
-      "tsc --noEmit"
+      "bash -c 'tsc --noEmit'"
     ]
   }
 }
