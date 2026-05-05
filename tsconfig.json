@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    // ─── Bản quy hoạch nền tảng ─────────────────────────────────────────
+    "target": "ES2020",               // Output JS version
+    "module": "ESNext",               // Module system
+    "moduleResolution": "bundler",    // Phù hợp với Vite
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    // ─── Chế độ nghiêm ngặt (bắt buộc cho 3D code phức tạp) ─────────────
+    "strict": true,                   // Bật toàn bộ strict checks
+    "noUnusedLocals": true,           // Bắt biến khai báo nhưng không dùng
+    "noUnusedParameters": true,       // Bắt tham số không dùng
+    "noImplicitReturns": true,        // Bắt function thiếu return
+    "noFallthroughCasesInSwitch": true,
+
+    // ─── Đường dẫn Alias @/ ──────────────────────────────────────────────
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@shaders/*": ["src/shaders/*"],
+      "@world/*": ["src/world/*"],
+      "@utils/*": ["src/utils/*"],
+      "@templates/*": ["src/templates/*"]
+    },
+
+    // ─── Cài đặt Output ─────────────────────────────────────────────────
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": true,
+
+    // ─── Tương thích & Tiện ích ──────────────────────────────────────────
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,         // Cho phép import file .json
+    "isolatedModules": true,           // Yêu cầu của Vite/esbuild
+    "skipLibCheck": true,              // Bỏ qua check node_modules
+    "useDefineForClassFields": true    // Tương thích với Three.js class
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "dist"]
+}

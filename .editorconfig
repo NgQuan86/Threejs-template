@@ -1,0 +1,37 @@
+# ─── Đồng bộ cấu hình editor cho toàn team ──────────────────────────────────
+# Hoạt động với VS Code, WebStorm, Vim, Neovim, Sublime Text...
+# Cài extension "EditorConfig for VS Code" để kích hoạt
+
+root = true
+
+# ─── Mặc định cho tất cả file ────────────────────────────────────────────────
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 2
+end_of_line = lf
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+# ─── TypeScript / JavaScript ─────────────────────────────────────────────────
+[*.{ts,js,mts,mjs}]
+indent_size = 2
+max_line_length = 100
+
+# ─── GLSL Shaders ────────────────────────────────────────────────────────────
+[*.{glsl,vert,frag}]
+indent_size = 4          # GLSL thường dùng 4 spaces
+max_line_length = 80
+
+# ─── JSON & Config ───────────────────────────────────────────────────────────
+[*.{json,jsonc}]
+indent_size = 2
+
+# ─── Markdown ────────────────────────────────────────────────────────────────
+[*.md]
+trim_trailing_whitespace = false   # Markdown dùng trailing space để xuống dòng
+max_line_length = off
+
+# ─── YAML (CI/CD pipelines) ──────────────────────────────────────────────────
+[*.{yml,yaml}]
+indent_size = 2

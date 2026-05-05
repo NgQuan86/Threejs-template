@@ -1,0 +1,34 @@
+/* 🛠 Reset chuẩn 3D - Khu phố 3D */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  overflow: hidden; /* Cấm cuộn trang để không làm hỏng trải nghiệm 3D */
+  background-color: #111111; /* Màu nền tối sang trọng */
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* 🎨 Cấu hình cho thẻ Canvas */
+.webgl {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  outline: none; /* Xóa viền khi click vào canvas */
+  user-select: none; /* Chống bôi đen văn bản khi thao tác 3D */
+}
+
+/* (Tùy chọn) Lớp phủ UI nếu bạn muốn thêm nút bấm sau này */
+#ui-overlay {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  pointer-events: none; /* Cho phép click xuyên qua UI xuống canvas */
+}

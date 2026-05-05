@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(claude mcp *)",
+      "Bash(npx --version)",
+      "Bash(gh --version)",
+      "Bash(nvm version *)",
+      "PowerShell(Get-Command nvm -ErrorAction SilentlyContinue)",
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "Bash(nvm install *)",
+      "Bash(npm --version)",
+      "PowerShell(\\(Get-Item \"C:\\\\Program Files\\\\nodejs\"\\).LinkType; \\(Get-Item \"C:\\\\Program Files\\\\nodejs\"\\).Target)",
+      "Bash(npx chrome-devtools-mcp *)",
+      "Bash(chrome-devtools-mcp --version)",
+      "Bash(gh auth *)",
+      "PowerShell(gh auth status 2>&1)",
+      "Bash(npx tsc *)",
+      "Bash(npm install *)",
+      "Bash(npx husky *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ]
+  }
+}

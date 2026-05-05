@@ -1,0 +1,59 @@
+{
+  "name": "threejs-journey-exercise",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Khu phố 3D - Hệ thống vận hành Three.js/WebGPU chuyên nghiệp",
+  "author": "Antigravity & User",
+  "scripts": {
+    "// dev": "Mở cửa khu phố - Chạy môi trường phát triển (Vite)",
+    "dev": "vite",
+    "// build": "Quy hoạch tổng thể - Kiểm tra lỗi và đóng gói sản phẩm",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "// quality": "Cảnh sát tuần tra - Kiểm tra lỗi logic và định dạng code",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix",
+    "format": "prettier --write \"src/**/*.{ts,js,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,css,html}\"",
+    "// test": "Phòng thí nghiệm - Chạy các bài kiểm tra toán học 3D",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@types/stats.js": "^0.17.4",
+    "@types/three": "^0.174.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vitest/ui": "^2.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.0.0",
+    "stats.js": "^0.17.0",
+    "typescript": "^5.0.0",
+    "vite": "^6.2.2",
+    "vite-plugin-checker": "^0.13.0",
+    "vite-plugin-restart": "^0.4.2",
+    "vite-tsconfig-paths": "^6.1.1",
+    "vitest": "^2.0.0"
+  },
+  "dependencies": {
+    "three": "^0.174.0"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.ts": [
+      "tsc --noEmit"
+    ]
+  }
+}
