@@ -4,6 +4,7 @@ import tsParser from '@typescript-eslint/parser'
 import prettierConfig from 'eslint-config-prettier'
 import prettierPlugin from 'eslint-plugin-prettier'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import globals from 'globals'
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
@@ -24,6 +25,10 @@ export default [
         project: './tsconfig.json',
         ecmaVersion: 2020,
         sourceType: 'module',
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.es2020,
       },
     },
     plugins: {
