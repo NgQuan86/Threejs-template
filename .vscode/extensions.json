@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "raczzalan.webgl-glsl-editor",
+    "antfu.unocss",
+    "usernamehw.errorlens",
+    "ms-vscode.vscode-typescript-next"
+  ]
+}
