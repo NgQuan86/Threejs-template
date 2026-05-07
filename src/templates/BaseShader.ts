@@ -21,12 +21,12 @@ export class BaseShader {
     return new THREE.MeshStandardMaterial({
       color: 0x00ff00,
       roughness: 0.5,
-      metalness: 0.5
+      metalness: 0.5,
     })
   }
 
   /** ⚙️ Cập nhật các biến số (Uniforms) trong shader */
-  public setUniform(name: string, value: any): void {
+  public setUniform(name: string, value: unknown): void {
     if (this.material.userData.uniforms) {
       this.material.userData.uniforms[name] = value
     }

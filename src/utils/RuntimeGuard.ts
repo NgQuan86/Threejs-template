@@ -39,7 +39,9 @@ export class RuntimeGuard {
     if (memory.geometries > this.prevGeometries) {
       this.leakFrames++
       if (this.leakFrames >= 3)
-        console.warn(`[Budget] Geometry leak? Count rising: ${memory.geometries} (${this.leakFrames} frames)`)
+        console.warn(
+          `[Budget] Geometry leak? Count rising: ${memory.geometries} (${this.leakFrames} frames)`
+        )
     } else {
       this.leakFrames = 0
     }

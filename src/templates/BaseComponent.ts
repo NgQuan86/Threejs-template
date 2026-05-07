@@ -19,7 +19,7 @@ export abstract class BaseComponent {
   /** 🔄 Cập nhật logic theo từng frame (nếu cần) */
   public update(_time: number): void {}
 
-  /** 
+  /**
    * 🧹 Dispose Pattern: Cực kỳ quan trọng để tránh rò rỉ bộ nhớ GPU.
    * Giải phóng Geometries, Materials và Textures.
    */
@@ -48,7 +48,7 @@ export abstract class BaseComponent {
 
     // Giải phóng vật liệu (xử lý cả trường hợp mảng vật liệu)
     if (Array.isArray(mesh.material)) {
-      mesh.material.forEach(m => m.dispose())
+      mesh.material.forEach((m) => m.dispose())
     } else {
       mesh.material.dispose()
     }

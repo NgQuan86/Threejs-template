@@ -1,14 +1,15 @@
+import { RuntimeGuard } from '@utils/RuntimeGuard'
 import Stats from 'stats.js'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-
-import { RuntimeGuard } from '@utils/RuntimeGuard'
+import { Pane } from 'tweakpane'
 
 export class BaseWorld {
   protected scene: THREE.Scene
   protected camera: THREE.PerspectiveCamera
   protected renderer: THREE.WebGLRenderer | null = null
   protected container: HTMLElement
+  protected devPane: Pane | null = null
   private devStats: Stats | null = null
   private devControls: OrbitControls | null = null
   private devGuard: RuntimeGuard | null = null
@@ -21,7 +22,12 @@ export class BaseWorld {
   }
 
   private createCamera(): THREE.PerspectiveCamera {
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    )
     camera.position.z = 5
     return camera
   }
@@ -34,9 +40,10 @@ export class BaseWorld {
   }
 
   private setupRenderer(): void {
-    const existingCanvas = this.container.querySelector('canvas') || document.querySelector('canvas.webgl')
+    const existingCanvas =
+      this.container.querySelector('canvas') || document.querySelector('canvas.webgl')
     this.renderer = new THREE.WebGLRenderer({
-      canvas: existingCanvas as HTMLCanvasElement || undefined,
+      canvas: (existingCanvas as HTMLCanvasElement) || undefined,
       antialias: true,
       alpha: true,
     })
@@ -60,6 +67,8 @@ export class BaseWorld {
     this.devStats.showPanel(0)
     document.body.appendChild(this.devStats.dom)
 
+    this.devPane = new Pane({ title: 'Debug' })
+
     if (this.renderer) {
       this.devControls = new OrbitControls(this.camera, this.renderer.domElement)
       this.devControls.enableDamping = true
@@ -81,6 +90,7 @@ export class BaseWorld {
   protected update(): void {}
 
   public dispose(): void {
+    this.devPane?.dispose()
     this.devStats?.dom.remove()
     this.devControls?.dispose()
     this.devGuard?.dispose()
