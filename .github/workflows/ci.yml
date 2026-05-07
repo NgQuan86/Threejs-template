@@ -1,0 +1,101 @@
+# ─── GitHub Actions CI — Quality Gate ────────────────────────────────────────
+#
+# VAI TRÒ:
+#   Chạy trên máy chủ GitHub (Ubuntu), không thể bypass bằng --no-verify.
+#   Bắt lỗi mà Husky bỏ sót: build failure, lint trên file không staged, etc.
+#
+# VỊ TRÍ TRONG PIPELINE:
+#
+#   Developer machine                 GitHub server (Ubuntu)
+#   ─────────────────                 ──────────────────────
+#   git commit                        git push
+#     └── Husky pre-commit              └── CI job này chạy
+#           ├── eslint (staged)               ├── type-check (toàn project)
+#           ├── prettier (staged)             ├── lint       (toàn project)
+#           └── tsc --noEmit                  ├── format:check (toàn project)
+#                                             └── build (Vite production)
+#
+# MỐI LIÊN HỆ VỚI HUSKY:
+#   Husky = cổng địa phương — nhanh, chỉ check file đang commit
+#   CI    = cổng tập trung  — chậm hơn, check toàn bộ project, không thể bypass
+#   Hai cổng bổ sung nhau, không thay thế nhau.
+#
+# KÍCH HOẠT:
+#   - Mọi push lên bất kỳ branch nào
+#   - Mọi Pull Request nhắm vào main / master
+#
+# KHI NÀO THÊM BƯỚC TEST:
+#   Khi có file *.test.ts đầu tiên trong src/ — bỏ comment block "Test" bên dưới.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  quality:
+    name: Quality Gate
+    runs-on: ubuntu-latest
+
+    steps:
+      # ─── 1. Lấy source code ────────────────────────────────────────────────
+      # actions/checkout@v4: clone repo về máy chủ GitHub
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ─── 2. Cài Node.js ────────────────────────────────────────────────────
+      # Node 20 LTS: phiên bản ổn định nhất, tương thích Vite 6 + Three.js 0.174
+      # cache: 'npm' → lưu node_modules dựa theo package-lock.json
+      #   → lần chạy sau (không đổi dependency) bỏ qua bước install, tiết kiệm ~30s
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # ─── 3. Cài dependency ─────────────────────────────────────────────────
+      # npm ci (không phải npm install):
+      #   - Đọc package-lock.json, cài đúng phiên bản đã lock
+      #   - Xóa node_modules trước — không có "drift" giữa lock và thực tế
+      #   - Nếu package-lock.json không khớp package.json → lỗi ngay (bắt lỗi sớm)
+      - name: Install dependencies
+        run: npm ci
+
+      # ─── 4. TypeScript check ───────────────────────────────────────────────
+      # tsc --noEmit: kiểm tra type trên toàn bộ project, không sinh file output
+      # Bắt lỗi type mà IDE đôi khi bỏ qua (cross-file type error, strict mode)
+      - name: TypeScript check
+        run: npm run type-check
+
+      # ─── 5. ESLint ─────────────────────────────────────────────────────────
+      # Chạy trên toàn bộ src/ — bao gồm file không staged lúc commit
+      # Các rule đang enforce: no-any, no-relative-import, max-lines, max-depth
+      - name: Lint
+        run: npm run lint
+
+      # ─── 6. Prettier format check ──────────────────────────────────────────
+      # --check: chỉ kiểm tra, không sửa (CI không commit ngược lại)
+      # Fail nếu bất kỳ file nào chưa được format đúng
+      - name: Format check
+        run: npm run format:check
+
+      # ─── 7. Production build ───────────────────────────────────────────────
+      # QUAN TRỌNG NHẤT: Husky hiện không chạy bước này — CI là nơi duy nhất
+      # kiểm tra build production thật sự hoạt động.
+      # Bắt: alias import không resolve, chunk split error, asset không tìm thấy
+      - name: Build
+        run: npm run build
+
+      # ─── [PENDING] Test ────────────────────────────────────────────────────
+      # Bỏ comment khi có file *.test.ts đầu tiên trong src/
+      # Hiện tại vitest với 0 test file sẽ exit code 1 → CI fail oan
+      #
+      # - name: Test
+      #   run: npm run test:run

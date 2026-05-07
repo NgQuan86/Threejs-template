@@ -120,3 +120,11 @@ Mặc định: xóa. Giữ lại khi module có logic phức tạp hoặc bạn 
 4. Sau khi được phép → `npm install`
 
 **CẤM** tự `npm install` không xin phép.
+
+---
+
+## G. Quy tắc Phối hợp & An toàn
+
+1. **Hỏi trước khi sửa code**: Đối với Antigravity (Gemini), trước khi thực hiện bất kỳ thay đổi nào vào mã nguồn chính (trừ thư mục `src/imported/`), **BẮT BUỘC** phải báo cáo kế hoạch và hỏi ý kiến user.
+2. **Tránh xung đột**: Quy tắc này giúp đảm bảo Antigravity không ghi đè lên những gì Claude Code đang thực hiện trong cùng một tệp.
+3. **Phê duyệt**: Chỉ khi user phản hồi "OK" hoặc "Tiến hành đi", Antigravity mới được phép ghi đè file.

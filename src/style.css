@@ -10,7 +10,11 @@ html,
 body {
   overflow: hidden; /* Cấm cuộn trang để không làm hỏng trải nghiệm 3D */
   background-color: #111111; /* Màu nền tối sang trọng */
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 /* 🎨 Cấu hình cho thẻ Canvas */

@@ -146,4 +146,5 @@ Luôn thông báo cho user để review trước khi merge.
 - Dùng **Gemini Flash** cho tác vụ search + git (tiết kiệm quota)
 - Dùng **Gemini Pro** khi: phân tích breaking changes, đọc changelog Three.js, viết MAINTENANCE.md — những task đòi hỏi đối chiếu API cũ/mới chính xác
 - Browser subagent: verify visual sau khi Claude Code integrate xong
-- **KHÔNG** tự ý chỉnh code trong `src/` ngoài `src/imported/`
+- **KHÔNG** tự ý chỉnh code trong `src/` (trừ `src/imported/`).
+- **BẮT BUỘC** hỏi ý kiến user trước khi thực hiện bất kỳ thay đổi nào vào mã nguồn chính để tránh xung đột với Claude Code.

@@ -1,48 +1,48 @@
-# Dự án Three.js/WebGPU Roadmap 🚀
+# Roadmap — Khu phố 3D
 
-Lộ trình phát triển được thiết kế để xây dựng dự án từ cốt lõi chuyên nghiệp đến các tính năng đồ họa cao cấp, ưu tiên tính ổn định và trải nghiệm lập trình viên.
-
----
-
-## 🟢 Giai đoạn 1: Trải nghiệm Lập trình viên (Thiết yếu nhất)
-*Mục tiêu: Giúp việc code và tinh chỉnh 3D trở nên nhanh chóng, trực quan.*
-
-- [x] **Tích hợp Debug UI (Tweakpane/Leva)**: Cho phép thay đổi thông số đèn, vật liệu, vị trí vật thể ngay trên trình duyệt mà không cần reload trang.
-- [x] **Hệ thống Monitor**: Kích hoạt `Stats.js` để theo dõi FPS, MS và Memory.
-- [x] **Hoàn thiện Lifecycle**: Đảm bảo `BaseWorld` xử lý tốt việc Resize, Fullscreen và Dispose (giải phóng bộ nhớ) để tránh memory leak.
+Theo dõi tiến độ toàn dự án. Chi tiết kỹ thuật từng mục nằm trong README của thư mục tương ứng.
 
 ---
 
-## 🟡 Giai đoạn 2: Hệ thống Tài nguyên & Môi trường
-*Mục tiêu: Đưa nội dung thực tế (Models, Textures) vào dự án một cách chuyên nghiệp.*
+## 🟢 Giai đoạn 1: Nền tảng Developer — HOÀN THÀNH
 
-- [x] **Resource Loader**: Xây dựng Class quản lý việc load GLTF, Texture, HDR tập trung. Có hỗ trợ Progress Bar.
-- [ ] **Loading Screen UI**: Component hiển thị progress bar trong khi ResourceLoader tải asset — tránh màn hình trắng khi khởi động.
-- [ ] **Environment Setup**: Tích hợp ánh sáng môi trường (HDR) để tạo độ chân thực (Realism) cơ bản cho mọi vật thể.
-- [x] **Camera Controls**: Tích hợp OrbitControls hoặc một hệ thống camera chuyên dụng.
+- [x] Debug UI (Tweakpane) — chỉnh thông số trực tiếp trên browser
+- [x] Stats.js — theo dõi FPS / MS / Memory
+- [x] BaseWorld lifecycle — Resize, Dispose, animation loop chuẩn
+- [x] RuntimeGuard — cảnh báo vượt draw call / triangle budget
+- [x] Commit gate — Husky + lint-staged + tsc + ESLint + Prettier
 
 ---
 
-## 🟠 Giai đoạn 3: Hệ thống Vật liệu & Hậu kỳ
-*Mục tiêu: Tạo ra hình ảnh "Wow" và định hình phong cách nghệ thuật.*
+## 🟡 Giai đoạn 2: Tài nguyên & Môi trường — GẦN XONG
 
-- [ ] **Animation System**: Tích hợp `THREE.AnimationMixer` cho GLTF animation và GSAP cho tween UI/camera — cần thiết ngay khi có model 3D đầu tiên.
-- [ ] **Scene Router / State Machine**: Quản lý chuyển đổi giữa các scene (loading → main → sub-scene) — càng để sau càng khó refactor.
-- [ ] **Shader Library**: Xây dựng các shader cụ thể dựa trên `BaseShader` (ví dụ: Ocean, Glow, Distant Fog).
-- [ ] **Post-processing Pipeline**: Thiết lập Bloom, Color Grading, và Anti-aliasing cao cấp.
-- [ ] **Interaction System**: Xây dựng hệ thống Raycaster để tương tác (Click/Hover) với các vật thể trong scene.
+- [x] ResourceLoader — load GLTF (+ Draco), Texture, HDR với cache
+- [x] LoadingScreen — progress bar khi tải asset
+- [x] OrbitControls — xoay/zoom camera
+- [x] Bộ utils đầy đủ — ViewportLinker, InteractionHelper, InstancedMeshPool, PostProcessingManager
+- [ ] **Environment Setup** — ánh sáng HDR cho scene (`PMREMGenerator` + `scene.environment`)
+
+---
+
+## 🟠 Giai đoạn 3: Vật liệu, Tương tác & Hậu kỳ
+
+- [ ] **Shader Library** — Water, Glass/Fresnel, Distance Fog, Glow (xem `src/shaders/`)
+- [ ] **Animation System** — `THREE.AnimationMixer` cho GLTF clip + GSAP cho camera tween
+- [ ] **Scene Router** — quản lý chuyển đổi giữa nhiều scene với dispose đúng chuẩn
+- [ ] **Camera System** — nhiều chế độ: overview / follow / first-person / cinematic
+- [ ] **Post-processing** — Bloom, Color Grading, FXAA (PostProcessingManager đã sẵn sàng)
+- [ ] **UI Components** — InfoPanel, MiniMap, TimeOfDay slider (xem `src/components/`)
 
 ---
 
 ## 🔴 Giai đoạn 4: Tối ưu hóa & Công nghệ mới
-*Mục tiêu: Sẵn sàng cho tương lai và chạy mượt trên mọi thiết bị.*
 
-- [ ] **WebGPU/TSL Migration**: Chuyển đổi dần các Shader sang `TSL` (Three Shading Language) để tận dụng tối đa GPU thế hệ mới.
-- [ ] **Performance Profiling**: Kiểm tra draw calls, triangle count và tối ưu hóa kết cấu (Texture Compression).
-- [ ] **LOD (Level of Detail)**: Tự động giảm chi tiết vật thể ở xa để tăng hiệu suất.
-- [ ] **Audio System**: Tích hợp `THREE.AudioListener` và `THREE.PositionalAudio` cho âm thanh 3D gắn với vị trí object trong scene.
+- [ ] **WebGPU / TSL Migration** — chuyển shader sang TSL cho WebGPU
+- [ ] **KTX2 Texture Compression** — load texture thẳng lên GPU (xem `src/utils/README.md`)
+- [ ] **LOD System** — giảm chi tiết vật thể ở xa tự động
+- [ ] **Audio System** — `THREE.PositionalAudio` gắn với object trong scene
 
 ---
 
-> [!NOTE]
-> Roadmap này là một thực thể sống. Khi Antigravity hoặc Claude Code hoàn thành một nhiệm vụ, chúng tôi sẽ cập nhật dấu `[x]` vào đây.
+> Khi hoàn thành một mục → đổi `[ ]` thành `[x]`.
+> Chi tiết triển khai và backlog kỹ thuật → xem README trong từng thư mục `src/`.

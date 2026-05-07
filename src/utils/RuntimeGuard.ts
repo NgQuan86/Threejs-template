@@ -1,3 +1,38 @@
+/**
+ * RuntimeGuard — Cảnh báo hiệu năng theo từng frame
+ *
+ * VỊ TRÍ TRONG DỰ ÁN:
+ *   src/utils/RuntimeGuard.ts
+ *   Được BaseWorld tự khởi tạo — không cần import thủ công trong World.ts.
+ *
+ * VAI TRÒ:
+ *   Đọc thống kê renderer sau mỗi frame và cảnh báo console nếu vượt budget:
+ *   - Draw calls > 100
+ *   - Triangle count > 500,000
+ *   - Geometry count tăng liên tiếp 3 frame (dấu hiệu memory leak)
+ *
+ * MỐI LIÊN HỆ:
+ *   BaseWorld tạo và gọi RuntimeGuard — World.ts không cần biết
+ *
+ *   BaseWorld.setupDevTools()  →  new RuntimeGuard(renderer)
+ *   BaseWorld.startLoop()      →  devGuard.check()  ← gọi sau mỗi render()
+ *
+ * TẠI SAO PHẢI GỌI SAU render() KHÔNG PHẢI setInterval:
+ *   renderer.info.render (calls, triangles) tự reset về 0 sau mỗi lần
+ *   renderer.render() được gọi. Nếu dùng setInterval sẽ luôn đọc được 0.
+ *   Phải đọc ngay sau render() trong cùng frame mới có số thật.
+ *
+ * DEV-ONLY:
+ *   Chỉ chạy khi import.meta.env.DEV = true (npm run dev).
+ *   Bị tree-shaken hoàn toàn khi npm run build — không có trong production.
+ *
+ * THAY ĐỔI BUDGET:
+ *   new RuntimeGuard(renderer, { drawCallLimit: 50, triangleLimit: 200_000 })
+ *
+ * DISPOSE:
+ *   Tự động được BaseWorld.dispose() gọi — không cần làm thủ công.
+ */
+
 interface RendererInfo {
   info: {
     render: { calls: number; triangles: number }

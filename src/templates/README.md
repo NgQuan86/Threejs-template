@@ -78,6 +78,7 @@ this.scene      // THREE.Scene
 this.camera     // THREE.PerspectiveCamera
 this.renderer   // THREE.WebGLRenderer | null
 this.container  // HTMLElement chứa canvas
+this.devPane    // Tweakpane | null — thêm debug slider/button ở đây
 ```
 
 ### Khởi động từ main.ts
@@ -133,8 +134,6 @@ export class OceanShader extends BaseShader {
 const shader = new OceanShader()
 const mesh = new THREE.Mesh(geometry, shader.get())
 scene.add(mesh)
-
-// Khi dispose:
 shader.dispose()
 ```
 
@@ -171,19 +170,10 @@ import { BaseComponent } from '@templates/BaseComponent'
 import * as THREE from 'three'
 
 export class Tree extends BaseComponent {
-  private geometry: THREE.BufferGeometry | null = null
-  private material: THREE.Material | null = null
-
-  constructor() {
-    super()
-    this.build()
-  }
-
   protected build(): void {
-    this.geometry = new THREE.ConeGeometry(0.5, 2, 8)
-    this.material = new THREE.MeshStandardMaterial({ color: 0x228822 })
-    const trunk = new THREE.Mesh(this.geometry, this.material)
-    this.mesh.add(trunk)    // thêm vào Group (this.mesh)
+    const geo = new THREE.ConeGeometry(0.5, 2, 8)
+    const mat = new THREE.MeshStandardMaterial({ color: 0x228822 })
+    this.mesh.add(new THREE.Mesh(geo, mat))
   }
 
   public override update(time: number): void {
@@ -194,15 +184,12 @@ export class Tree extends BaseComponent {
 // Trong World.ts:
 const tree = new Tree()
 this.scene.add(tree.mesh)
-
-// Khi xóa:
-tree.dispose()   // tự dọn hết geometry + material + xóa khỏi scene
+tree.dispose()   // tự dọn hết geometry + material
 ```
 
 ### Dispose pattern quan trọng
 
-`BaseComponent.dispose()` tự động traverse toàn bộ mesh con và dọn sạch. Nhưng nếu class con có resource ngoài mesh (texture load tay, audio...) phải override và dọn thêm:
-
+Nếu class con có resource ngoài mesh (texture load tay, audio...) phải override:
 ```ts
 public override dispose(): void {
   this.extraTexture?.dispose()   // ← dọn resource thêm trước
@@ -231,3 +218,34 @@ main.ts
               ├── scene.add(component.mesh)    ← BaseComponent
               └── mesh.material = shader.get() ← BaseShader
 ```
+
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+# BACKLOG — Đề xuất chưa thực hiện
+> Xem lại khi điều kiện tương ứng được đáp ứng.
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+
+
+### BaseWorld — WebGPU Renderer variant
+**Điều kiện:** Khi dự án chuyển sang WebGPU (ROADMAP Phase 4).
+**Tại sao chưa làm:** `THREE.WebGPURenderer` vẫn đang experimental. API chưa ổn định.
+**Khi làm:** Không tạo `BaseWorldGPU` riêng — sửa `BaseWorld.ts` thêm auto-detect:
+```ts
+const renderer = (await WebGPU.isAvailable())
+  ? new THREE.WebGPURenderer()
+  : new THREE.WebGLRenderer()
+```
+
+---
+
+### BaseWorld — Fullscreen API
+**Điều kiện:** Khi cần nút fullscreen cho người dùng cuối.
+**Tại sao chưa làm:** Dev tool, không phải yêu cầu của scene hiện tại.
+**Khi làm:** Thêm `toggleFullscreen()` vào `BaseWorld.ts` — gọi `container.requestFullscreen()` và lắng nghe `fullscreenchange` event.
+
+---
+
+### BaseComponent — Object Pooling
+**Điều kiện:** Khi scene spawn/despawn nhiều object cùng loại liên tục (đạn, particle, xe vào/ra).
+**Tại sao chưa làm:** `InstancedMeshPool` đủ cho object tĩnh. Pooling cần khi object có vòng đời ngắn.
+**Khi làm:** Thêm static `Pool<T extends BaseComponent>` — recycle instance thay vì new/dispose liên tục.
