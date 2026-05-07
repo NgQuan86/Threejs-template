@@ -7,24 +7,27 @@ Lộ trình phát triển được thiết kế để xây dựng dự án từ 
 ## 🟢 Giai đoạn 1: Trải nghiệm Lập trình viên (Thiết yếu nhất)
 *Mục tiêu: Giúp việc code và tinh chỉnh 3D trở nên nhanh chóng, trực quan.*
 
-- [ ] **Tích hợp Debug UI (Tweakpane/Leva)**: Cho phép thay đổi thông số đèn, vật liệu, vị trí vật thể ngay trên trình duyệt mà không cần reload trang.
-- [ ] **Hệ thống Monitor**: Kích hoạt `Stats.js` để theo dõi FPS, MS và Memory.
-- [ ] **Hoàn thiện Lifecycle**: Đảm bảo `BaseWorld` xử lý tốt việc Resize, Fullscreen và Dispose (giải phóng bộ nhớ) để tránh memory leak.
+- [x] **Tích hợp Debug UI (Tweakpane/Leva)**: Cho phép thay đổi thông số đèn, vật liệu, vị trí vật thể ngay trên trình duyệt mà không cần reload trang.
+- [x] **Hệ thống Monitor**: Kích hoạt `Stats.js` để theo dõi FPS, MS và Memory.
+- [x] **Hoàn thiện Lifecycle**: Đảm bảo `BaseWorld` xử lý tốt việc Resize, Fullscreen và Dispose (giải phóng bộ nhớ) để tránh memory leak.
 
 ---
 
 ## 🟡 Giai đoạn 2: Hệ thống Tài nguyên & Môi trường
 *Mục tiêu: Đưa nội dung thực tế (Models, Textures) vào dự án một cách chuyên nghiệp.*
 
-- [ ] **Resource Loader**: Xây dựng Class quản lý việc load GLTF, Texture, HDR tập trung. Có hỗ trợ Progress Bar.
+- [x] **Resource Loader**: Xây dựng Class quản lý việc load GLTF, Texture, HDR tập trung. Có hỗ trợ Progress Bar.
+- [ ] **Loading Screen UI**: Component hiển thị progress bar trong khi ResourceLoader tải asset — tránh màn hình trắng khi khởi động.
 - [ ] **Environment Setup**: Tích hợp ánh sáng môi trường (HDR) để tạo độ chân thực (Realism) cơ bản cho mọi vật thể.
-- [ ] **Camera Controls**: Tích hợp OrbitControls hoặc một hệ thống camera chuyên dụng.
+- [x] **Camera Controls**: Tích hợp OrbitControls hoặc một hệ thống camera chuyên dụng.
 
 ---
 
 ## 🟠 Giai đoạn 3: Hệ thống Vật liệu & Hậu kỳ
 *Mục tiêu: Tạo ra hình ảnh "Wow" và định hình phong cách nghệ thuật.*
 
+- [ ] **Animation System**: Tích hợp `THREE.AnimationMixer` cho GLTF animation và GSAP cho tween UI/camera — cần thiết ngay khi có model 3D đầu tiên.
+- [ ] **Scene Router / State Machine**: Quản lý chuyển đổi giữa các scene (loading → main → sub-scene) — càng để sau càng khó refactor.
 - [ ] **Shader Library**: Xây dựng các shader cụ thể dựa trên `BaseShader` (ví dụ: Ocean, Glow, Distant Fog).
 - [ ] **Post-processing Pipeline**: Thiết lập Bloom, Color Grading, và Anti-aliasing cao cấp.
 - [ ] **Interaction System**: Xây dựng hệ thống Raycaster để tương tác (Click/Hover) với các vật thể trong scene.
@@ -37,6 +40,7 @@ Lộ trình phát triển được thiết kế để xây dựng dự án từ 
 - [ ] **WebGPU/TSL Migration**: Chuyển đổi dần các Shader sang `TSL` (Three Shading Language) để tận dụng tối đa GPU thế hệ mới.
 - [ ] **Performance Profiling**: Kiểm tra draw calls, triangle count và tối ưu hóa kết cấu (Texture Compression).
 - [ ] **LOD (Level of Detail)**: Tự động giảm chi tiết vật thể ở xa để tăng hiệu suất.
+- [ ] **Audio System**: Tích hợp `THREE.AudioListener` và `THREE.PositionalAudio` cho âm thanh 3D gắn với vị trí object trong scene.
 
 ---
 
