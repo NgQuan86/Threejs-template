@@ -93,16 +93,16 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ## BaseShader.ts
 
-**Vai trò:** Khuôn cho material/shader tùy chỉnh với dispose pattern chuẩn.
+**Vai trò:** Material/shader mẫu với dispose pattern chuẩn — dùng trực tiếp hoặc extend.
 
 ### Cấu trúc
 
 ```
 BaseShader
-├── createMaterial()   ← override để tạo material thật
-├── setUniform()       ← cập nhật uniform tên bất kỳ
-├── get()              ← lấy material để gán cho Mesh
-└── dispose()          ← dọn memory GPU, có isDisposed guard
+├── constructor(opts)  ← nhận intensity, color
+├── setIntensity(v)    ← cập nhật uIntensity, range [0, 10]
+├── getMaterial()      ← lấy ShaderMaterial để gán cho Mesh
+└── dispose()          ← dọn material GPU, có isDisposed guard
 ```
 
 ### Cách dùng
@@ -111,30 +111,37 @@ BaseShader
 import { BaseShader } from '@templates/BaseShader'
 import * as THREE from 'three'
 
-export class OceanShader extends BaseShader {
-  private uniforms = {
-    uTime: { value: 0 },
-    uColor: { value: new THREE.Color(0x0066ff) },
-  }
+// Dùng trực tiếp:
+const shader = new BaseShader({ intensity: 1.5, color: new THREE.Color(0x00ffcc) })
+const mesh = new THREE.Mesh(geometry, shader.getMaterial())
+scene.add(mesh)
 
-  protected createMaterial(): THREE.Material {
-    return new THREE.ShaderMaterial({
-      uniforms: this.uniforms,
-      vertexShader: `...`,    // hoặc import ?raw từ file .glsl
+// Dispose khi xong:
+shader.dispose()
+mesh.geometry.dispose()
+```
+
+### Extend để thêm shader riêng
+
+Khi cần shader phức tạp hơn, copy `BaseShader.ts` ra file mới — không sửa file gốc:
+
+```ts
+// src/shaders/OceanShader.ts
+export class OceanShader {
+  private material: THREE.ShaderMaterial
+  private isDisposed = false
+
+  constructor() {
+    this.material = new THREE.ShaderMaterial({
+      uniforms: { uTime: { value: 0 } },
+      vertexShader: `...`,
       fragmentShader: `...`,
     })
   }
 
-  update(time: number): void {
-    this.uniforms.uTime.value = time
-  }
+  getMaterial() { return this.material }
+  dispose() { if (this.isDisposed) return; this.material.dispose(); this.isDisposed = true }
 }
-
-// Trong World.ts:
-const shader = new OceanShader()
-const mesh = new THREE.Mesh(geometry, shader.get())
-scene.add(mesh)
-shader.dispose()
 ```
 
 ### Ưu tiên shader language (theo CLAUDE.md)

@@ -10,6 +10,7 @@ Tập hợp các công cụ hỗ trợ độc lập — không phụ thuộc l�
 
 | File | Vai trò  | Dùng khi nào | Bắt buộc? |
 |---|---|---|---|
+| `GlobalUniforms.ts` | Singleton sync uTime/uWeather/uDamage cho mọi shader | Mọi scene dùng shader tùy chỉnh | Khi có shader |
 | `RuntimeGuard.ts` | Cảnh báo draw calls / triangle vượt budget | Mọi World có animation loop | Dev-only |
 | `ResourceLoader.ts` | Tải và cache Texture / GLTF (Draco) / HDR | Scene load file từ `public/` | Khi có asset |
 | `LoadingScreen.ts` | Overlay progress bar khi tải asset | Dùng kèm `ResourceLoader` | Optional |

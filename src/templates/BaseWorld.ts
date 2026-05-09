@@ -83,6 +83,7 @@ export class BaseWorld {
   private devStats: Stats | null = null
   private devControls: OrbitControls | null = null
   private devGuard: RuntimeGuard | null = null
+  private readonly boundResize: () => void
 
   // ─── Constructor ──────────────────────────────────────────────────────────
   // Chỉ nhận containerId — tìm element trong DOM, fallback về document.body
@@ -91,8 +92,11 @@ export class BaseWorld {
     this.container = document.getElementById(containerId) || document.body
     this.scene = new THREE.Scene()
     this.camera = this.createCamera()
+    this.boundResize = this.handleResize.bind(this)
     this.init()
   }
+
+  protected clock = new THREE.Clock()
 
   // ─── Setup: Camera ────────────────────────────────────────────────────────
   // FOV 75° là giá trị chuẩn cho scene kiến trúc — không quá méo, không quá hẹp
@@ -134,16 +138,17 @@ export class BaseWorld {
   }
 
   // ─── Setup: Resize handler ────────────────────────────────────────────────
-  // Closure ẩn danh — không lưu reference nên không remove được trong dispose()
   // PostProcessingManager tự thêm listener riêng để update composer + FXAA
   private addEventListeners(): void {
-    window.addEventListener('resize', () => {
-      const width = window.innerWidth
-      const height = window.innerHeight
-      this.camera.aspect = width / height
-      this.camera.updateProjectionMatrix()
-      this.renderer?.setSize(width, height)
-    })
+    window.addEventListener('resize', this.boundResize)
+  }
+
+  private handleResize(): void {
+    const width = window.innerWidth
+    const height = window.innerHeight
+    this.camera.aspect = width / height
+    this.camera.updateProjectionMatrix()
+    this.renderer?.setSize(width, height)
   }
 
   // ─── Setup: Dev tools (dev-only) ──────────────────────────────────────────
@@ -170,7 +175,11 @@ export class BaseWorld {
     this.renderer?.setAnimationLoop(() => {
       this.devStats?.begin()
       this.devControls?.update()
-      this.update()
+
+      const delta = this.clock.getDelta()
+      const time = this.clock.getElapsedTime()
+      this.update(delta, time)
+
       this.render()
       this.devGuard?.check()
       this.devStats?.end()
@@ -180,7 +189,7 @@ export class BaseWorld {
   // ─── Overridable hooks ────────────────────────────────────────────────────
   // World.ts override update() để thêm logic per-frame (animation, physics...)
   // World.ts override render() KHI dùng PostProcessingManager thay renderer.render()
-  protected update(): void {}
+  protected update(_delta: number, _time: number): void {}
 
   protected render(): void {
     this.renderer?.render(this.scene, this.camera)
@@ -190,6 +199,7 @@ export class BaseWorld {
   // Gọi khi chuyển scene hoặc unmount — dọn DOM và giải phóng GPU context
   // renderer.domElement.remove() xóa canvas khỏi DOM
   public dispose(): void {
+    window.removeEventListener('resize', this.boundResize)
     this.devPane?.dispose()
     this.devStats?.dom.remove()
     this.devControls?.dispose()
