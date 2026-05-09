@@ -21,6 +21,7 @@
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
     "type-check": "tsc --noEmit",
+    "check:imports": "node ../check-imports.js",
     "prepare": "husky"
   },
   "devDependencies": {
