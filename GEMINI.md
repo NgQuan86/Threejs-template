@@ -125,11 +125,11 @@ Claude Code không làm việc này — chỉ được gọi khi có file MAINTE
 
 ## Branch & Tag Convention
 
-| Tình huống | Branch | Tag trước khi làm |
-|---|---|---|
-| Thêm module mới | `feat/add-[tên-kebab]` | Không cần |
-| Migrate Three.js version | `chore/migrate-three@[version]` | `three@[version-cũ]-stable` |
-| Fix lỗi nhỏ (< 5 dòng, 1 file) | trực tiếp `main` | Không cần |
+| Tình huống                     | Branch                          | Tag trước khi làm           |
+| ------------------------------ | ------------------------------- | --------------------------- |
+| Thêm module mới                | `feat/add-[tên-kebab]`          | Không cần                   |
+| Migrate Three.js version       | `chore/migrate-three@[version]` | `three@[version-cũ]-stable` |
+| Fix lỗi nhỏ (< 5 dòng, 1 file) | trực tiếp `main`                | Không cần                   |
 
 **Tên branch — kebab-case, ví dụ:**
 - `feat/add-water-shader`

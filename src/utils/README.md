@@ -8,16 +8,16 @@ Tập hợp các công cụ hỗ trợ độc lập — không phụ thuộc l�
 
 ## Danh sách
 
-| File | Vai trò  | Dùng khi nào | Bắt buộc? |
-|---|---|---|---|
-| `GlobalUniforms.ts` | Singleton sync uTime/uWeather/uDamage cho mọi shader | Mọi scene dùng shader tùy chỉnh | Khi có shader |
-| `RuntimeGuard.ts` | Cảnh báo draw calls / triangle vượt budget | Mọi World có animation loop | Dev-only |
-| `ResourceLoader.ts` | Tải và cache Texture / GLTF (Draco) / HDR | Scene load file từ `public/` | Khi có asset |
-| `LoadingScreen.ts` | Overlay progress bar khi tải asset | Dùng kèm `ResourceLoader` | Optional |
-| `ViewportLinker.ts` | Project 3D → tọa độ pixel 2D cho HTML label | Scene cần label/popup HTML đè lên canvas | Optional |
-| `InteractionHelper.ts` | Wrapper Raycaster — hover/click vào object 3D | Scene tương tác (bấm vào nhà, hover highlight) | Optional |
-| `InstancedMeshPool.ts` | Render nhiều object giống nhau với 1 draw call | Scene có cây/đèn/xe lặp lại nhiều lần | Optional |
-| `PostProcessingManager.ts` | EffectComposer: Bloom + FXAA + OutputPass | Mọi scene cần visual quality cao | Optional |
+| File                       | Vai trò                                              | Dùng khi nào                                   | Bắt buộc?     |
+| -------------------------- | ---------------------------------------------------- | ---------------------------------------------- | ------------- |
+| `GlobalUniforms.ts`        | Singleton sync uTime/uWeather/uDamage cho mọi shader | Mọi scene dùng shader tùy chỉnh                | Khi có shader |
+| `RuntimeGuard.ts`          | Cảnh báo draw calls / triangle vượt budget           | Mọi World có animation loop                    | Dev-only      |
+| `ResourceLoader.ts`        | Tải và cache Texture / GLTF (Draco) / HDR            | Scene load file từ `public/`                   | Khi có asset  |
+| `LoadingScreen.ts`         | Overlay progress bar khi tải asset                   | Dùng kèm `ResourceLoader`                      | Optional      |
+| `ViewportLinker.ts`        | Project 3D → tọa độ pixel 2D cho HTML label          | Scene cần label/popup HTML đè lên canvas       | Optional      |
+| `InteractionHelper.ts`     | Wrapper Raycaster — hover/click vào object 3D        | Scene tương tác (bấm vào nhà, hover highlight) | Optional      |
+| `InstancedMeshPool.ts`     | Render nhiều object giống nhau với 1 draw call       | Scene có cây/đèn/xe lặp lại nhiều lần          | Optional      |
+| `PostProcessingManager.ts` | EffectComposer: Bloom + FXAA + OutputPass            | Mọi scene cần visual quality cao               | Optional      |
 
 ---
 

@@ -8,11 +8,11 @@
 ## 0. THAM CHIẾU BẮT BUỘC
 Trước khi code, đọc 3 file sau theo thứ tự:
 
-| File | Mục đích |
-|------|----------|
-| `vite.config.js` | Alias đang dùng, plugins, dev server config |
-| `tsconfig.json` | Strict rules, path mapping, target ES version |
-| `package.json` | Thư viện đã có — KHÔNG cài thêm khi chưa được phép |
+| File             | Mục đích                                           |
+| ---------------- | -------------------------------------------------- |
+| `vite.config.js` | Alias đang dùng, plugins, dev server config        |
+| `tsconfig.json`  | Strict rules, path mapping, target ES version      |
+| `package.json`   | Thư viện đã có — KHÔNG cài thêm khi chưa được phép |
 
 ---
 
@@ -153,13 +153,13 @@ Templates có sẵn:
 
 ## 6. PERFORMANCE BUDGET
 
-| Chỉ số | Giới hạn |
-|--------|----------|
-| Draw calls / frame | < 100 |
-| Triangle count | < 500,000 |
-| Texture size tối đa | 2048 × 2048 |
-| Bundle size (gzipped) | < 500 KB |
-| Hàm / file | < 50 dòng (Rule 50) |
+| Chỉ số                | Giới hạn            |
+| --------------------- | ------------------- |
+| Draw calls / frame    | < 100               |
+| Triangle count        | < 500,000           |
+| Texture size tối đa   | 2048 × 2048         |
+| Bundle size (gzipped) | < 500 KB            |
+| Hàm / file            | < 50 dòng (Rule 50) |
 
 ### Runtime Guard — Bắt buộc trong mọi World class
 Bảng số tĩnh không tự enforce được — dùng pattern này để cảnh báo runtime:
@@ -168,8 +168,8 @@ class RuntimeGuard {
   constructor(private renderer: THREE.WebGPURenderer | THREE.WebGLRenderer) {}
 
   check(): void {
-    const { calls, triangles } = this.renderer.info.render
-    if (calls > 100)       console.warn(`[Budget] Draw calls: ${calls}/100`)
+    const { drawCalls, triangles } = this.renderer.info.render  // drawCalls = per-frame
+    if (drawCalls > 100)       console.warn(`[Budget] Draw calls: ${drawCalls}/100`)
     if (triangles > 500_000) console.warn(`[Budget] Triangles: ${triangles}/500k`)
   }
 }
@@ -199,13 +199,13 @@ Không bypass bằng --no-verify trừ khi có lý do khẩn cấp được ghi 
 
 ## 8. NHỮNG GÌ MÁY ĐÃ ENFORCE (AI chỉ cần biết)
 
-| Rule | Enforce bởi | Trạng thái |
-|------|-------------|------------|
-| Cấm `any` | eslint (`error`) | 🛑 BẮT BUỘC |
-| Cấm đường dẫn `../` | eslint import rule | 🛑 BẮT BUỘC |
-| Hàm > 50 dòng (Rule 50) | eslint `max-lines-per-function` | 🛑 LỖI ĐỎ |
-| Độ lồng code (Depth) > 3 | eslint `max-depth` | 🛑 LỖI ĐỎ |
-| Tự động sắp xếp Import | eslint `simple-import-sort` | 🪄 TỰ ĐỘNG |
-| Lỗi TS/ESLint hiện realtime | vite-plugin-checker | 📺 REALTIME |
-| Commit lỗi bị block | Husky + lint-staged | 🔐 GATEKEEPER |
-| Alias tự đồng bộ Vite↔TS | vite-tsconfig-paths | 🔗 ĐÃ KHỚP |
+| Rule                        | Enforce bởi                     | Trạng thái    |
+| --------------------------- | ------------------------------- | ------------- |
+| Cấm `any`                   | eslint (`error`)                | 🛑 BẮT BUỘC   |
+| Cấm đường dẫn `../`         | eslint import rule              | 🛑 BẮT BUỘC   |
+| Hàm > 50 dòng (Rule 50)     | eslint `max-lines-per-function` | 🛑 LỖI ĐỎ     |
+| Độ lồng code (Depth) > 3    | eslint `max-depth`              | 🛑 LỖI ĐỎ     |
+| Tự động sắp xếp Import      | eslint `simple-import-sort`     | 🪄 TỰ ĐỘNG    |
+| Lỗi TS/ESLint hiện realtime | vite-plugin-checker             | 📺 REALTIME   |
+| Commit lỗi bị block         | Husky + lint-staged             | 🔐 GATEKEEPER |
+| Alias tự đồng bộ Vite↔TS    | vite-tsconfig-paths             | 🔗 ĐÃ KHỚP    |

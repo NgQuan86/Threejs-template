@@ -6,11 +6,11 @@
 
 ## A. Project Overview
 
-| | |
-|---|---|
-| Tech stack | Three.js 0.174, Vite 6, TypeScript 5 (strict) |
-| Renderer | WebGL (hiện tại) → WebGPU (roadmap) |
-| AI agents | Claude Code (shader/GPU/code) + Antigravity Gemini (architecture/git) |
+| ---------- | --------------------------------------------------------------------- |
+| ---------- | --------------------------------------------------------------------- |
+| Tech stack | Three.js 0.174, Vite 6, TypeScript 5 (strict)                         |
+| Renderer   | WebGL (hiện tại) → WebGPU (roadmap)                                   |
+| AI agents  | Claude Code (shader/GPU/code) + Antigravity Gemini (architecture/git) |
 
 Chi tiết quy tắc kỹ thuật:
 - Claude Code → đọc `CLAUDE.md`
@@ -52,10 +52,10 @@ src/imported/              ← Gemini drop module vào đây
 3. Claude Code đọc `SUMMARY.md` → adapt vào scene chính
 4. Claude Code cập nhật `.module-lock.json` → quyết định lifecycle `src/imported/[tên]/`:
 
-| Trường hợp | Hành động |
-|---|---|
-| Module đơn giản (≤ 50 dòng, 1 file) | Xóa folder — lock file đủ để trace |
-| Module phức tạp hoặc cần diff sau này | Giữ lại → thêm vào `.gitignore` |
+| Trường hợp                            | Hành động                          |
+| ------------------------------------- | ---------------------------------- |
+| Module đơn giản (≤ 50 dòng, 1 file)   | Xóa folder — lock file đủ để trace |
+| Module phức tạp hoặc cần diff sau này | Giữ lại → thêm vào `.gitignore`    |
 
 Mặc định: xóa. Giữ lại khi module có logic phức tạp hoặc bạn dự định re-adapt.
 
@@ -81,34 +81,34 @@ Mặc định: xóa. Giữ lại khi module có logic phức tạp hoặc bạn 
 
 ## D. Phân Quyền Agent
 
-| Tác vụ | Gemini | Claude Code |
-|--------|:------:|:-----------:|
-| Search + pull module từ library | ✅ | ❌ |
-| git pull / push / commit | ✅ | ❌ |
-| Cập nhật README catalog | ✅ | ❌ |
-| Viết SUMMARY.md handoff | ✅ | ❌ |
-| Kiểm kho khi Three.js update | ✅ | ❌ |
-| Scan grep tìm API bị ảnh hưởng | ✅ | ❌ |
-| Viết + xóa MAINTENANCE.md | ✅ | ❌ |
-| Lên kế hoạch kiến trúc tổng thể | ✅ | ❌ |
-| Adapt module vào scene chính | ❌ | ✅ |
-| Sửa code theo MAINTENANCE.md | ❌ | ✅ |
-| Viết shader / GPU logic | ❌ | ✅ |
-| Debug TypeScript, fix lint | ❌ | ✅ |
-| Tối ưu memory / performance | ❌ | ✅ |
+| Tác vụ                          | Gemini | Claude Code |
+| ------------------------------- | ------ | ----------- |
+| Search + pull module từ library | ✅     | ❌          |
+| git pull / push / commit        | ✅     | ❌          |
+| Cập nhật README catalog         | ✅     | ❌          |
+| Viết SUMMARY.md handoff         | ✅     | ❌          |
+| Kiểm kho khi Three.js update    | ✅     | ❌          |
+| Scan grep tìm API bị ảnh hưởng  | ✅     | ❌          |
+| Viết + xóa MAINTENANCE.md       | ✅     | ❌          |
+| Lên kế hoạch kiến trúc tổng thể | ✅     | ❌          |
+| Adapt module vào scene chính    | ❌     | ✅          |
+| Sửa code theo MAINTENANCE.md    | ❌     | ✅          |
+| Viết shader / GPU logic         | ❌     | ✅          |
+| Debug TypeScript, fix lint      | ❌     | ✅          |
+| Tối ưu memory / performance     | ❌     | ✅          |
 
 ---
 
 ## E. Naming Convention
 
-| Loại | Format | Ví dụ |
-|------|--------|-------|
-| Class / Component | PascalCase | `OceanSurface.ts` |
-| Utility / Helper | camelCase | `mathUtils.ts` |
-| Constant | UPPER_SNAKE | `MAX_PARTICLE_COUNT` |
-| Shader file | PascalCase | `OceanSurface.wgsl` |
-| React component | PascalCase | `DebugPanel.tsx` |
-| Hook | camelCase + `use` | `useAnimationLoop.ts` |
+| Loại              | Format            | Ví dụ                 |
+| ----------------- | ----------------- | --------------------- |
+| Class / Component | PascalCase        | `OceanSurface.ts`     |
+| Utility / Helper  | camelCase         | `mathUtils.ts`        |
+| Constant          | UPPER_SNAKE       | `MAX_PARTICLE_COUNT`  |
+| Shader file       | PascalCase        | `OceanSurface.wgsl`   |
+| React component   | PascalCase        | `DebugPanel.tsx`      |
+| Hook              | camelCase + `use` | `useAnimationLoop.ts` |
 
 ---
 

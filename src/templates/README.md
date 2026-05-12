@@ -6,11 +6,11 @@ Bộ khung base cho mọi project Three.js. **Không sửa trực tiếp các fi
 
 ## Tổng quan 3 template
 
-| File | Dùng cho | Extend hay Copy |
-|---|---|---|
-| `BaseWorld.ts` | Scene chính — engine 3D | **Extend** |
-| `BaseShader.ts` | Shader / material tùy chỉnh | **Extend** |
-| `BaseComponent.ts` | Object 3D trong scene | **Extend** |
+| File               | Dùng cho                    | Extend hay Copy |
+| ------------------ | --------------------------- | --------------- |
+| `BaseWorld.ts`     | Scene chính — engine 3D     | **Extend**      |
+| `BaseShader.ts`    | Shader / material tùy chỉnh | **Extend**      |
+| `BaseComponent.ts` | Object 3D trong scene       | **Extend**      |
 
 ---
 
@@ -29,11 +29,11 @@ Dispose:     Dọn Stats, OrbitControls, RuntimeGuard, Renderer
 
 ### Dev tools tự động (chỉ chạy khi npm run dev)
 
-| Tool | Hiển thị |
-|---|---|
-| `Stats.js` | FPS counter góc trái màn hình |
-| `OrbitControls` | Xoay/zoom camera bằng chuột |
-| `RuntimeGuard` | Cảnh báo console nếu vượt draw calls/triangle budget |
+| Tool            | Hiển thị                                             |
+| --------------- | ---------------------------------------------------- |
+| `Stats.js`      | FPS counter góc trái màn hình                        |
+| `OrbitControls` | Xoay/zoom camera bằng chuột                          |
+| `RuntimeGuard`  | Cảnh báo console nếu vượt draw calls/triangle budget |
 
 Khi `npm run build` — tất cả bị tree-shaken, không có trong bundle production.
 

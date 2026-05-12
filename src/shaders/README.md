@@ -8,9 +8,9 @@ Chứa các shader module được tích hợp từ `threejs-modules/shaders/`.
 
 ## Danh sách
 
-| Folder | Vai trò | Deps | Status |
-|--------|---------|------|--------|
-| _(chưa có)_ | — | — | — |
+| Folder      | Vai trò | Deps | Status |
+| ----------- | ------- | ---- | ------ |
+| _(chưa có)_ | —       | —    | —      |
 
 ---
 
